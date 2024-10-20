@@ -32,9 +32,6 @@ class NetworkEntity(models.Model):
     class Meta:
         verbose_name = 'Звено сети'
         verbose_name_plural = 'Звенья сети'
-        constraints = [
-            models.CheckConstraint(check=~models.Q(parent_entity=models.F('pk')), name='no_self_reference'),
-        ]  # проверка на создание циклических зависимостей
 
 
 class Product(models.Model):

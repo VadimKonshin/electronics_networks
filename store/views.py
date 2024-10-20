@@ -1,3 +1,4 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics
 
 from store.models import NetworkEntity
@@ -11,6 +12,8 @@ class NetworkEntityCreateAPIView(generics.CreateAPIView):
 class NetworkEntityListAPIView(generics.ListAPIView):
     serializer_class = NetworkEntitySerializers
     queryset = NetworkEntity.objects.all()
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = ('country',)
 
 
 class NetworkEntityRetrieveAPIView(generics.RetrieveAPIView):
