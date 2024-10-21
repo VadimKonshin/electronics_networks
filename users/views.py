@@ -5,5 +5,6 @@ from users.serializers import UserSerializer
 
 
 class UserViewSet(viewsets.ViewSet):
+    '''вьюсет для юзеров'''
     serializer_class = UserSerializer
     queryset = User.objects.all()

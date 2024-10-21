@@ -5,6 +5,7 @@ from django.db import models
 NULLABLE = {'null':True, "blank":True}
 
 class User(AbstractUser):
+    '''модель пользователя'''
     username = None
 
     email = models.EmailField(unique=True, verbose_name='Почта')
