@@ -1,5 +1,6 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics, viewsets
+from rest_framework.exceptions import ValidationError
 
 from store.models import NetworkEntity, Product
 from store.permissions import IsActiveUserPermissions
@@ -37,7 +38,7 @@ class NetworkEntityUpdateAPIView(generics.UpdateAPIView):
     def perform_update(self, serializer):
         if 'debt' in serializer.validated_data:
             serializer.validated_data.pop('debt')
-            raise Exception('У вас нет прав менять задолность')
+            raise ValidationError('У вас нет прав менять задолность')
         super().perform_update(serializer)
 
 
@@ -47,7 +48,7 @@ class NetworkEntityDestroyAPIView(generics.DestroyAPIView):
     permission_classes = [IsActiveUserPermissions]
 
 
-class ProductViewSet(viewsets.ViewSet):
+class ProductViewSet(viewsets.ModelViewSet):
     '''вьюсет для продуктов'''
     serializer_class = ProductSerializers
     queryset = Product.objects.all()
