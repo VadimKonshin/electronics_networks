@@ -21,7 +21,6 @@ class NetworkEntityListAPIView(generics.ListAPIView):
     permission_classes = [IsActiveUserPermissions]
 
 
-
 class NetworkEntityRetrieveAPIView(generics.RetrieveAPIView):
     ''' Класс просмотра одного магазина '''
     serializer_class = NetworkEntitySerializers
@@ -35,11 +34,18 @@ class NetworkEntityUpdateAPIView(generics.UpdateAPIView):
     queryset = NetworkEntity.objects.all()
     permission_classes = [IsActiveUserPermissions]
 
+    def perform_update(self, serializer):
+        if 'debt' in serializer.validated_data:
+            serializer.validated_data.pop('debt')
+            raise Exception('У вас нет прав менять задолность')
+        super().perform_update(serializer)
+
 
 class NetworkEntityDestroyAPIView(generics.DestroyAPIView):
     ''' Класс удаления магазина '''
     queryset = NetworkEntity.objects.all()
     permission_classes = [IsActiveUserPermissions]
+
 
 class ProductViewSet(viewsets.ViewSet):
     '''вьюсет для продуктов'''
